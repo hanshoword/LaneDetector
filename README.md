@@ -39,11 +39,6 @@
   * CannyEdge를 사용해 차선의 윤곽선을 검출합니다.
 
    * 마지막으로 Probabilistic Hough를 사용하여 윤곽선에서 직선을 검출합니다. 
-     * 확률적 허프변환 : 모든 픽셀에 대해 변환을 수행하지않고 무작위로 픽셀을 선택하여 허프변환 수행
-     * probabilistic : 시작점, 끝점을 반환     
-       * parameter1 : 최소선의 길이 : 이 값보다 작으면 reject
-       * parameter2 : 최대선 간격 : 선과 선사이의 최대 허용간격, 이 값보다 작으면 reject
-
 
 ## Source Code 목록
   ### Class
@@ -52,21 +47,21 @@
   * public IplImage BaseBinary(IplImage src, int threshold)
   <img src="https://user-images.githubusercontent.com/47768726/59994961-b48b5d00-9690-11e9-8a05-9eb072faa2c3.JPG" width = "90%"></img>
     
-     * 기본적인 이진화 변환 메서드입니다.  
+     기본적인 이진화 변환 메서드입니다.  
    
-     * Gray변환을 수행 한 후, 임계치를 매개변수로 받아와 이 임계점 이하라면 검은색, 임계점 이상이라면 흰색을 출력합니다.
+     Gray변환을 수행 한 후, 임계치를 매개변수로 받아와 이 임계점 이하라면 검은색, 임계점 이상이라면 흰색을 출력합니다.
         
   * public IplImage Binary(IplImage src, int threshold)
   
   <img src = "https://user-images.githubusercontent.com/47768726/59995926-cae6e800-9693-11e9-9ec7-f731354fbfab.JPG" width = "90%"></img>
   
-    * Adaptive thresholding(적응형 경계화)를 통한 이진화 메서드입니다.
+    Adaptive thresholding(적응형 경계화)를 통한 이진화 메서드입니다.
      
-    * void cv::adaptiveThreshold( InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blocksize, double C)   
+    void cv::adaptiveThreshold( InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blocksize, double C)   
     
-    * 고정된 경계값을 사용하면 부분적으로 이진화가 만족스럽게 되지 않을수도 있습니다.
+    고정된 경계값을 사용하면 부분적으로 이진화가 만족스럽게 되지 않을수도 있습니다.
     
-    * 적응적 경계화를 실시 : 픽셀 위치마다 다른 threshold(이웃하는 픽셀값에 의해 결정)를 사용하는 가변적 기법 입니다.
+    적응적 경계화를 실시 : 픽셀 위치마다 다른 threshold(이웃하는 픽셀값에 의해 결정)를 사용하는 가변적 기법 입니다.
          * b x b 크기의 블록을 설정후 가우시안 가중평균을 구합니다( 블록 중심에 가까울수록 높은 가중치를 주어 평균을 구하는 방법)
          * 평균값에서 상수 파라미터 C를 빼면 threshold값을 얻을수 있습니다.
 
@@ -76,18 +71,28 @@
  
      HSV공간에서 노란색 차선을 인식합니다.
  
-     Yellow Range : 10, 75, 75 ~ 56, 255, 255
-  
-     White Range : 0, 200, 10 ~ 255, 255, 255
+     Yellow Range : 10, 75, 75(HSV) ~ 56, 255, 255(HSV)
+     
+     Hue : 색상
+    
+     Saturation : 채도
+     
+     Value : 명도
+
  
  * public IplImage WhiteTransform(IplImage src)
  
  <img src = "https://user-images.githubusercontent.com/47768726/60001598-bf9ab900-96a1-11e9-9df5-8a06ceac3076.JPG" width= "90%"></img>
   
- 
+      RGB공간에서 흰색 차선을 인식합니다.  
+      
+      White Range : 0, 200, 10 (RGB) ~ 255, 255, 255 (RGB)
+      
+      
  * yellow & white 병합
  
     <img src = "https://user-images.githubusercontent.com/47768726/60013022-5f634180-96b8-11e9-943f-69c2236a24da.png" width= "90%"></img>
+   
 
  * public IplImage BlurImage(IplImage src)
   
@@ -101,18 +106,25 @@
   * public IplImage SliceImage(IplImage src)
   <img src = "https://user-images.githubusercontent.com/47768726/60002115-00df9880-96a3-11e9-9722-c1dd8c431a6f.JPG" width= "90%"></img>
   
-    * 좌상, 좌하, 우상, 우하의 4점을 지정하여 관심영역(ROI)를 설정하여 프로그램의 성능을 개선합니다.
+    좌상, 좌하, 우상, 우하의 4점을 지정하여 관심영역(ROI)를 설정하여 프로그램의 성능을 개선합니다.
     
   <img src = "https://user-images.githubusercontent.com/47768726/60002118-0341f280-96a3-11e9-8c8c-d07b9cd1ef35.png" width= "90%"></img>
   
-    * src와 동일한 clone인 mask를 생성합니다.
+    src와 동일한 clone인 mask를 생성합니다.
   
   <img src = "https://user-images.githubusercontent.com/47768726/60001568-b1e53380-96a1-11e9-9fc9-ea6cef4beed0.JPG" width= "90%"></img>
   
+     관심영역과 mask를 합하여 src에서 그 영역만 잘라낸다.
+  
  
-    * 검출된 차선의 이진화
-    <img src = "https://user-images.githubusercontent.com/47768726/60002280-5156f600-96a3-11e9-9728-b4ecf557f5b3.png" width= "90%"></img>
-  * public IplImage CannyLine(IplImage src, char color_line)
+ * 검출된 차선의 이진화
+    <img src = "https://user-images.githubusercontent.com/47768726/60014964-32655d80-96bd-11e9-8a56-59ec97084a9e.png" width= "90%"></img>
+      
+       검출된 노란색 차선과 흰색 차선을 합친 이미지를 다시 이진화를 통해 흰색과 검은색으로만 이루어진 이미지를 만듭니다.
+       
+ 
+ 
+ * public IplImage CannyLine(IplImage src, char color_line)
   <img src = "https://user-images.githubusercontent.com/47768726/60001608-c4f80380-96a1-11e9-92a1-6f6a3d430030.JPG" width= "90%"></img>
   <img src = "https://user-images.githubusercontent.com/47768726/60001614-c75a5d80-96a1-11e9-98a2-01514ec1b59e.JPG" width= "90%"></img>
   <img src = "https://user-images.githubusercontent.com/47768726/60001618-c9242100-96a1-11e9-9936-abd86ed22c3c.JPG" width= "90%"></img>
@@ -130,16 +142,125 @@
   
   * public IplImage HoughLines(IplImage src)
   <img src = "https://user-images.githubusercontent.com/47768726/60002186-29679280-96a3-11e9-9642-9a78e58c2db9.png" width= "90%"></img>
-  * public void Quick_Recursive(double[] data, int left, int right)
+ 
+    확률적 허프변환 : 모든 픽셀에 대해 변환을 수행하지않고 무작위로 픽셀을 선택하여 허프변환 수행
+    probabilistic : 시작점, 끝점을 반환     
+    parameter1 : 최소선의 길이 : 이 값보다 작으면 reject
+    parameter2 : 최대선 간격 : 선과 선사이의 최대 허용간격, 이 값보다 작으면 reject
+ 
+ * public void Quick_Recursive(double[] data, int left, int right)
   
-  * public void Quick_Sort(double[] data, int count)
+ * public void Quick_Sort(double[] data, int count) 
+    
+       한 프레임내에서 허프변환을 통해 구해진 여러개의 직선들 중 하나만 사용자에게 보여줘야 하므로 대표선을 추출합니다.
+       
+       Hough 변환을 통해 얻어진 직선은 여러 정보를 내포하고있습니다.
+       
+       그 중에서 직선을 이루는 두 점의 X좌표 및 Y좌표를 얻어와 X좌표의 차, Y좌표의 차를 구한후 arctan연산을 통해 기울기를 구합니다.
+       
+       기울기를 기준으로 QuickSort를 수행하여 가장 큰 기울기를 가진 하나의 대표선을 추출합니다.
   
   * public void Dispose() //메모리 해제
   
+        사용했던 이미지변수들을 ReleaseImage를 통해 메모리 해제를 시켜줍니다.
+  
   ### Main
+  
+  ```c
+using System;
+using System.Windows.Forms;
+using OpenCvSharp;
+
+namespace TrafficManagement
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        CvCapture capture;
+        IplImage src;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                /*video*/
+
+                capture = CvCapture.FromFile("../../../project_video.mp4");
+                LaneDetection Convert = new LaneDetection();
+
+                /* camera
+                capture = CvCapture.FromCamera(CaptureDevice.DShow, 0);
+                capture.SetCaptureProperty(capture.FrameWidth, 640);
+                capture.SetCaptureProperty(capture.FrameHeight, 480);
+                */
+            }
+            catch
+            {
+                timer1.Enabled = false;
+            }
+        }
+
+       
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            LaneDetection Convert = new LaneDetection();
+            src = capture.QueryFrame();
+            
+            if(src != null)
+            {                
+                IplImage yw_canny = new IplImage(src.Size, BitDepth.U8, 3);
+                IplImage y_canny = new IplImage(src.Size, BitDepth.U8, 3);
+                IplImage w_canny = new IplImage(src.Size, BitDepth.U8, 3);
+
+                 w_canny = Convert.CannyLine(src, 'w');
+                y_canny = Convert.CannyLine(src, 'y');
+                yw_canny = w_canny + y_canny;
+                pictureBoxIpl4.ImageIpl = Convert.SliceImage(src);                
+
+                pictureBoxIpl2.ImageIpl = Convert.HoughLines(src);
+            }
+            else
+            {
+                pictureBoxIpl2.ImageIpl = null;
+                timer1.Enabled = false;
+            }
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Cv.ReleaseImage(src);
+            if (src != null) src.Dispose();
+        }
+        
+    }
+}
+
+  ```
 
 ## 구현 결과물
 
+<img src="https://user-images.githubusercontent.com/47768726/60016847-4b244200-96c2-11e9-9910-bf525cf0924c.JPG" width = "90%"></img>
+
+    노란색 차선을 인식하였을 경우 노란색으로 선을 표시하며, 흰색 차선일경우엔 흰색으로 표시하도록 하였습니다.
+
+    선의 길이를 고정길이( src.Height * 5 /8 )로 출력합니다. 고정길이 보다 길면 y의 좌표에서 y 증가량 만큼 빼줍니다.
+
+    y증가량만큼 빼줬기때문에 x증가량도 x좌표에서 빼주어야 합니다.
+
+    <img src="https://user-images.githubusercontent.com/47768726/60017505-d3571700-96c3-11e9-8a67-42bdc5e47450.jpg" width = "30%"></img>
+
+    선의 길이가 고정길이보다 짧으면 각 좌표에서 x,y증가량만큼 늘려줍니다.
+
+    dx : x증가량, dy: y증가량
+
 ## 분석 및 평가
+
+
+
 
 ## 개선 방안
