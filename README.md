@@ -142,12 +142,25 @@
   
   * public IplImage HoughLines(IplImage src)
   <img src = "https://user-images.githubusercontent.com/47768726/60002186-29679280-96a3-11e9-9642-9a78e58c2db9.png" width= "90%"></img>
- 
-    확률적 허프변환 : 모든 픽셀에 대해 변환을 수행하지않고 무작위로 픽셀을 선택하여 허프변환 수행
-    probabilistic : 시작점, 끝점을 반환     
-    parameter1 : 최소선의 길이 : 이 값보다 작으면 reject
-    parameter2 : 최대선 간격 : 선과 선사이의 최대 허용간격, 이 값보다 작으면 reject
- 
+ ```
+확률적 허프변환 : 모든 픽셀에 대해 변환을 수행하지않고 무작위로 픽셀을 선택하여 허프변환 수행
+
+probabilistic : 시작점, 끝점을 반환     
+
+parameter1 : 최소선의 길이 : 이 값보다 작으면 reject
+
+parameter2 : 최대선 간격 : 선과 선사이의 최대 허용간격, 이 값보다 작으면 reject
+
+선의 길이를 고정길이( src.Height * 5 /8 )로 출력합니다. 고정길이 보다 길면 y의 좌표에서 y 증가량 만큼 빼줍니다.
+
+y증가량만큼 빼줬기때문에 x증가량도 x좌표에서 빼주어야 합니다.
+
+<img src="https://user-images.githubusercontent.com/47768726/60017505-d3571700-96c3-11e9-8a67-42bdc5e47450.jpg" width = "30%"></img>
+
+선의 길이가 고정길이보다 짧으면 각 좌표에서 x,y증가량만큼 늘려줍니다.
+
+dx : x증가량, dy: y증가량
+ ```
  * public void Quick_Recursive(double[] data, int left, int right)
   
  * public void Quick_Sort(double[] data, int count) 
@@ -246,17 +259,12 @@ namespace TrafficManagement
 
 <img src="https://user-images.githubusercontent.com/47768726/60016847-4b244200-96c2-11e9-9910-bf525cf0924c.JPG" width = "90%"></img>
 
-    노란색 차선을 인식하였을 경우 노란색으로 선을 표시하며, 흰색 차선일경우엔 흰색으로 표시하도록 하였습니다.
+```
 
-    선의 길이를 고정길이( src.Height * 5 /8 )로 출력합니다. 고정길이 보다 길면 y의 좌표에서 y 증가량 만큼 빼줍니다.
+노란색 차선을 인식하였을 경우 노란색으로 선을 표시하며, 흰색 차선일경우엔 흰색으로 표시하도록 하였습니다.
 
-    y증가량만큼 빼줬기때문에 x증가량도 x좌표에서 빼주어야 합니다.
+``` 
 
-<img src="https://user-images.githubusercontent.com/47768726/60017505-d3571700-96c3-11e9-8a67-42bdc5e47450.jpg" width = "30%"></img>
-
-    선의 길이가 고정길이보다 짧으면 각 좌표에서 x,y증가량만큼 늘려줍니다.
-
-    dx : x증가량, dy: y증가량
 
 ## 분석 및 평가
 
