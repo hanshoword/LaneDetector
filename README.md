@@ -59,15 +59,57 @@
    
      * Gray변환을 수행 한 후, 임계치를 매개변수로 받아와 이 임계점 이하라면 검은색, 임계점 이상이라면 흰색을 출력합니다.
         
-  * public IplImage Binary(IplImage src, int threshold)
-  * public IplImage BlurImage(IplImage src)
+    * public IplImage Binary(IplImage src, int threshold)
+  
+  <img src = "https://user-images.githubusercontent.com/47768726/59995926-cae6e800-9693-11e9-9ec7-f731354fbfab.JPG" width = "90%"></img>
+  
+    * Adaptive thresholding(적응형 경계화)를 통한 이진화 메서드입니다.
+     
+    * void cv::adaptiveThreshold( InputArray src, OutputArray dst, double maxValue, int adaptiveMethod, int thresholdType, int blocksize, double C)   
+    
+    * 고정된 경계값을 사용하면 부분적으로 이진화가 만족스럽게 되지 않을수도 있습니다.
+    
+    * 적응적 경계화를 실시 : 픽셀 위치마다 다른 threshold(이웃하는 픽셀값에 의해 결정)를 사용하는 가변적 기법 입니다.
+         * b x b 크기의 블록을 설정후 가우시안 가중평균을 구합니다( 블록 중심에 가까울수록 높은 가중치를 주어 평균을 구하는 방법)
+         * 평균값에서 상수 파라미터 C를 빼면 threshold값을 얻을수 있습니다.
+
+    * public IplImage BlurImage(IplImage src)
+  
+  <img src = "https://user-images.githubusercontent.com/47768726/60001531-9b3edc80-96a1-11e9-9731-57dff878251e.JPG" width= "90%"></img>
+  
+    * Gaussian Blur를 사용합니다
+    
+    * BxB 필터를 크기에서 중앙의 인접한 값을 기준으로 필터중앙의 픽셀값을 재조정 하여 이미지의 노이즈를 제거합니다 
+    
+    
   * public IplImage SliceImage(IplImage src)
+  <img src = "https://user-images.githubusercontent.com/47768726/60002115-00df9880-96a3-11e9-9722-c1dd8c431a6f.JPG" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60002118-0341f280-96a3-11e9-8c8c-d07b9cd1ef35.png" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60001568-b1e53380-96a1-11e9-9fc9-ea6cef4beed0.JPG" width= "90%"></img>
+  
   * public IplImage YellowTransform(IplImage src)
+  <img src = "https://user-images.githubusercontent.com/47768726/60001588-bd385f00-96a1-11e9-8ee3-4a18a6cb74a4.JPG" width= "90%"></img>
   * public IplImage WhiteTransform(IplImage src)
+  <img src = "https://user-images.githubusercontent.com/47768726/60001598-bf9ab900-96a1-11e9-9df5-8a06ceac3076.JPG" width= "90%"></img>
+  
+    * yellow & white 병합
+    <img src = "https://user-images.githubusercontent.com/47768726/60002147-0fc64b00-96a3-11e9-95e3-937dfcae0402.png" width= "90%"></img>
+
+    * 검출된 차선의 이진화
+    <img src = "https://user-images.githubusercontent.com/47768726/60002280-5156f600-96a3-11e9-9728-b4ecf557f5b3.png" width= "90%"></img>
   * public IplImage CannyLine(IplImage src, char color_line)
+  <img src = "https://user-images.githubusercontent.com/47768726/60001608-c4f80380-96a1-11e9-92a1-6f6a3d430030.JPG" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60001614-c75a5d80-96a1-11e9-98a2-01514ec1b59e.JPG" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60001618-c9242100-96a1-11e9-9936-abd86ed22c3c.JPG" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60002062-ef968c00-96a2-11e9-99e1-cb0d0f55d8c0.png" width= "90%"></img>
+  <img src = "https://user-images.githubusercontent.com/47768726/60002069-f1604f80-96a2-11e9-808a-becf24cf8137.png" width= "90%"></img>
+  
   * public IplImage HoughLines(IplImage src)
+  <img src = "https://user-images.githubusercontent.com/47768726/60002186-29679280-96a3-11e9-9642-9a78e58c2db9.png" width= "90%"></img>
   * public void Quick_Recursive(double[] data, int left, int right)
+  
   * public void Quick_Sort(double[] data, int count)
+  
   * public void Dispose() //메모리 해제
   
   ### Main
