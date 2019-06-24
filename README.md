@@ -114,7 +114,7 @@
   
   <img src = "https://user-images.githubusercontent.com/47768726/60001568-b1e53380-96a1-11e9-9fc9-ea6cef4beed0.JPG" width= "90%"></img>
   
-     관심영역과 mask를 합하여 src에서 그 영역만 잘라낸다.
+     관심영역과 mask를 합하여 src에서 그 영역만 잘라냅니다.
   
  
  * 검출된 차선의 이진화
